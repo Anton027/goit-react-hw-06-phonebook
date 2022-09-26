@@ -1,10 +1,37 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import { Box } from "components/Box"
-const ContactsList = ({ contacts, onDelContact }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { remove } from "redux/contactsSlice/slice";
+
+  // const getVisibleNameFilter = () => {
+  //   const normalFilter = filter.toLowerCase().trim();
+    
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(normalFilter)
+  //   )
+  // }
+
+const ContactsList = () => {
+    const items = useSelector(state => state.items);
+    const filterContact = useSelector(state => state.filter); 
+    const dispatch = useDispatch();
+    console.log(filterContact);
+    // console.log(Object.values(filterContact.status));
+    // const filterToString = Object.prototype.toString(filterContact);
+
+    // console.log(filterToString);
+
+
+    // const getVisibleNameFilter = () => {
+    //     const normalFilter = filterContact.status.toLowerCase().trim();
+
+    //     return items.filter(item => item.name.toLowerCase().includes(normalFilter))
+    // }
+
+    // const filterName = getVisibleNameFilter();
     return (
         <>
-            {contacts.map( ({ number,name,id }) => (
+            {items.map( ({ number,name,id }) => (
                 <Box
                     as="li"
                     display='inline-flex'
@@ -14,17 +41,16 @@ const ContactsList = ({ contacts, onDelContact }) => {
                 >
                     <p>{`${name}: ${number}`}</p>
                     <button
-                        onClick={() => {
-                            onDelContact(id);
-                        }}
-                    >delete</button>
+                        onClick={() => 
+                            dispatch(remove(id))
+                        }
+                    >
+                        delete
+                    </button>
                 </Box>
             ))}
         </>
     )
 }
-ContactsList.propTypes = {
-    contacts: PropTypes.array.isRequired,
-    onDelContact: PropTypes.func.isRequired
-}
+
 export default ContactsList;
