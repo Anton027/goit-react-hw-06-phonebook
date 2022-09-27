@@ -7,11 +7,11 @@ const Filter = () => {
     const dispatch = useDispatch();
 
     const handleChangeFilter = e => {
-        dispatch(setStatusFilter({
-            status: e.currentTarget.value
-        }));
+        dispatch(setStatusFilter(
+            e.currentTarget.value.toLowerCase().trim()
+        ));
     };
-
+    
     return (
         <>
             <p>Find Contacts by name</p>

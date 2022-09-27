@@ -1,20 +1,23 @@
 import { Box } from "components/Box";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { add } from "redux/contactsSlice/slice";
+import { getItems } from "redux/selector";
 
 function ContactForm() {
+    const items = useSelector(getItems);
     const dispatch = useDispatch();
 
     const handleSubmitForm = e => {
         e.preventDefault();
         const form = e.target;
-        dispatch(add({
-            name: form.elements.name.value,
-            number: form.elements.number.value
-        }))
-        
+        const name = form.elements.name.value;
+        const number = form.elements.number.value;
+
+        items.find(item => item.name.toLowerCase() === name.toLowerCase())
+            ? alert(name + ' is already in contacts')
+            : dispatch(add({ name,number }))
         form.reset();
     };
 
