@@ -14,10 +14,12 @@ function ContactForm() {
         const form = e.target;
         const name = form.elements.name.value;
         const number = form.elements.number.value;
-
-        items.find(item => item.name.toLowerCase() === name.toLowerCase())
+        if (items) {
+            items.find(item => item.name.toLowerCase() === name.toLowerCase())
             ? alert(name + ' is already in contacts')
             : dispatch(add({ name,number }))
+        }
+
         form.reset();
     };
 

@@ -8,17 +8,19 @@ const ContactsList = () => {
     const items = useSelector(getItems);
     const filterContact = useSelector(getFilter).status; 
     const dispatch = useDispatch();
-    
+
     const getVisibleNameFilter = () => {
         const normalFilter = filterContact.toLowerCase().trim();
-
-        return items.filter(item => item.name.toLowerCase().includes(normalFilter))
+        
+        if (items) {
+            return items.filter(item => item.name.toLowerCase().includes(normalFilter))
+        }
     }
 
     const filterName = getVisibleNameFilter();
     return (
         <>
-            {filterName.map( ({ number,name,id }) => (
+            {filterName && filterName.map( ({ number,name,id }) => (
                 <Box
                     as="li"
                     display='inline-flex'
